@@ -1,0 +1,333 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #e4e7ec;
+  --card: #f4f5f7;
+  --ink: #1d2025;
+  --line: #2a2e35;
+  --muted: #5b626e;
+  --accent: #b01e37;
+  --accent-soft: #f3d9de;
+  --good: #21704a;
+  --good-soft: #d6ede0;
+  --imgbg: #ffffff;
+  --ghost: #b4bac4;
+  --hl: #f2c94c;
+  --snake: #4e8a3e;
+  --ladder: #9a6a3a;
+  --free: #e9e2f5;
+  --t1: #b01e37;
+  --t2: #1f5fa8;
+  --t3: #d08a12;
+  --t4: #7b45a8;
+  --hand: "Patrick Hand", "Comic Sans MS", "Segoe Print", cursive;
+  --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"],
+.dark {
+  --paper: #17191d;
+  --card: #22252b;
+  --ink: #e8eaed;
+  --line: #c8cdd5;
+  --muted: #9ba2ad;
+  --accent: #ea5b73;
+  --accent-soft: #3d2027;
+  --good: #5cc48c;
+  --good-soft: #1c3328;
+  --imgbg: #ffffff;
+  --ghost: #4c525c;
+  --hl: #e0b53a;
+  --snake: #78b865;
+  --ladder: #c79a66;
+  --free: #2e2838;
+  --t1: #ea5b73;
+  --t2: #5e9be6;
+  --t3: #e8a93a;
+  --t4: #b98bdb;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+}
+
+.font-hand {
+  font-family: var(--hand);
+}
+
+.font-body {
+  font-family: var(--body);
+}
+
+svg text {
+  font-family: var(--hand);
+}
+
+.ink {
+  stroke: var(--line);
+  fill: none;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ink.thin {
+  stroke-width: 1.5px;
+}
+
+.ink.dash {
+  stroke-dasharray: 7 6;
+  stroke-width: 2.5px;
+}
+
+.cell {
+  fill: var(--card);
+}
+
+.cell.free {
+  fill: var(--free);
+}
+
+.cell.goal {
+  fill: var(--accent-soft);
+}
+
+.cnum {
+  fill: var(--muted);
+  font-size: 13px;
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+.port .pf {
+  fill: var(--paper);
+  stroke: var(--line);
+  stroke-width: 2px;
+}
+
+.port .pq {
+  fill: var(--muted);
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 20px;
+  font-family: var(--hand);
+}
+
+.port.done .pf {
+  fill: var(--imgbg);
+  stroke: var(--good);
+  stroke-width: 3px;
+}
+
+.port.tried .pf {
+  stroke-dasharray: 4 3;
+}
+
+.lbl {
+  text-anchor: middle;
+  fill: var(--ink);
+  font-size: 15px;
+}
+
+.lbl.big {
+  fill: var(--accent);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.freeic {
+  text-anchor: middle;
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.ladder {
+  stroke: var(--ladder);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.snake {
+  stroke: var(--snake);
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.9;
+}
+
+.snakehead {
+  fill: var(--snake);
+}
+
+.snakeeye {
+  fill: var(--imgbg);
+}
+
+.tok {
+  stroke: var(--line);
+  stroke-width: 2.5px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tok.active {
+  stroke-width: 3.5px;
+}
+
+.tok.bounce {
+  animation: 0.55s ease-out forwards pawnBounce;
+}
+
+.landed {
+  fill: none;
+  stroke: var(--hl);
+  stroke-width: 5px;
+}
+
+.node .nb {
+  fill: var(--card);
+  stroke: var(--line);
+  stroke-width: 2.5px;
+}
+
+.node .nimg {
+  fill: var(--imgbg);
+}
+
+.node .nq {
+  fill: var(--muted);
+  text-anchor: middle;
+  font-size: 34px;
+}
+
+.node .nl {
+  fill: var(--ink);
+  text-anchor: middle;
+  font-size: 19px;
+}
+
+.node.ghost .nb {
+  stroke: var(--ghost);
+  stroke-dasharray: 5 4;
+  fill: transparent;
+}
+
+.node.ghost .nl {
+  fill: var(--muted);
+  font-size: 17px;
+}
+
+.node.done .nb {
+  stroke: var(--good);
+  stroke-width: 3px;
+}
+
+.node.me .nb {
+  fill: var(--accent-soft);
+}
+
+.node.me .nl {
+  fill: var(--accent);
+  font-size: 28px;
+}
+
+.mering {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5px;
+  opacity: 0.6;
+}
+
+.mark {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.markhead {
+  fill: var(--accent);
+}
+
+.wed {
+  fill: var(--accent);
+  text-anchor: middle;
+  font-size: 15px;
+}
+
+.die-cube {
+  border: 3px solid var(--line);
+  background: var(--imgbg);
+  border-radius: 12px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  width: 54px;
+  height: 54px;
+  padding: 7px;
+  display: grid;
+}
+
+.die-cube i {
+  visibility: hidden;
+  background: #1d2025;
+  border-radius: 50%;
+  place-self: center;
+  width: 9px;
+  height: 9px;
+}
+
+.die-cube i.on {
+  visibility: visible;
+}
+
+.die-cube.rolling {
+  animation: 0.12s linear infinite shake;
+}
+
+@keyframes shake {
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes pawnBounce {
+  0% {
+    transform: translateY(-22px) scale(0.85, 1.25);
+  }
+  40% {
+    transform: translateY(0) scale(1.22, 0.82);
+  }
+  65% {
+    transform: translateY(-9px) scale(0.95, 1.05);
+  }
+  85% {
+    transform: translateY(0) scale(1.05, 0.95);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pop {
+  animation: 0.22s ease-out forwards popIn;
+}

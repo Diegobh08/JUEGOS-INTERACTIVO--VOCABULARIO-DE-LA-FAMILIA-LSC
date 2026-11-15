@@ -1,0 +1,8 @@
+{
+  "name": "La Casa de las Señas - Vocabulario de la Familia",
+  "description": "Juego educativo e interactivo de lengua de señas sobre el vocabulario de la familia: tablero de casa con cuadros, árbol genealógico y aprendizaje con dado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

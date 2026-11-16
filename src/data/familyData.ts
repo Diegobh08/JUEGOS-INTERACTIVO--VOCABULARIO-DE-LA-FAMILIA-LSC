@@ -375,23 +375,23 @@ export const DIE_PIPS: Record<number, number[]> = {
 };
 
 export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
- abuelo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__2__ad282f6a.mp4`,
-
+  abuelo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__2__ad282f6a.mp4`,
   amigo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__1__3e42114f.mp4`,
-
   bebe: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM_b1b6b135.mp4`,
-
   cunado: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.46_PM_b8c78072.mp4`,
-
   esposa: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.45_PM_e3f6b9f8.mp4`,
-
   familia: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__3__084ce41c.mp4`,
-
   hermano: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__2__152f0a9a.mp4`,
-
   hombre: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__1__6f422231.mp4`,
-
   mama: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM_1dc916e1.mp4`,
+  mcatolico: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.23_PM_94827cad.mp4`,
+  mcivil: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.31_PM_cca08811.mp4`,
+  mujer: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.26_PM_db16d1f7.mp4`,
+  nieto: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.34_PM_bc819944.mp4`,
+  nino: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.40_PM_0aae969e.mp4`,
+  novio: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.48_PM_ea17986d.mp4`,
+  suegro: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.39_PM_98bff232.mp4`,
+  tio: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.57_PM_b4baa531.mp4`,
 };
 
 export function getSignImageUrl(name: string): string {

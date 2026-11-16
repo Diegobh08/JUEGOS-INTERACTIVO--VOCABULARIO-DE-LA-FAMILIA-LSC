@@ -2,10 +2,6 @@
 
 ### Aprende, juega y descubre la Lengua de Señas Colombiana (LSC) 🤟
 
-\<p align="center">   \<strong>Una experiencia interactiva para aprender el vocabulario de la familia en Lengua de Señas Colombiana.\</strong> \</p>
-
-\<p align="center">   🎮 Aprendizaje interactivo · 🤟 Inclusión · 🎲 Diversión · 💚 Educación \</p>
-
 ---
 
 ## 🌟 ¿Que es Entre Señas y Escaleras: La Casa Familiar?

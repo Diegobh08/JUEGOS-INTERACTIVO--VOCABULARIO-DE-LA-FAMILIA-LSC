@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/JUEGOS-INTERACTIVO--VOCABULARIO-DE-LA-FAMILIA-LSC/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

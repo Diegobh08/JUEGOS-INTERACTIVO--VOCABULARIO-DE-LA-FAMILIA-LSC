@@ -131,8 +131,3 @@ Más que aprender palabras, queremos fomentar el respeto, la empatía y la inclu
 
 ---
 
-\<p align="center">
-&#x20; 🤟 \<strong>LA CASA DE LAS SEÑAS\</strong>
-&#x20; \<br>
-&#x20; \<em>Aprender jugando, comunicar sin barreras e incluir con el corazón.\</em>
-\</p>

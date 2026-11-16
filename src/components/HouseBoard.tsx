@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  BACK_ONE_SQUARES,
   BONUS_TWO_SQUARES,
   LADDERS,
   SNAKES,
@@ -607,6 +608,7 @@ export const HouseBoard: React.FC<HouseBoardProps> = ({
           const isStart = sq === 1;
           const isGoal = sq === 36;
           const isBonus = BONUS_TWO_SQUARES.includes(sq);
+          const isBack = BACK_ONE_SQUARES.includes(sq);
           const isDone = Boolean(wordId && done[wordId] !== undefined);
           const isTried = Boolean(wordId && tried[wordId] && !isDone);
           const wordItem = wordId ? WORD_MAP[wordId] : null;
@@ -617,7 +619,9 @@ export const HouseBoard: React.FC<HouseBoardProps> = ({
               ? 'var(--house-goal)'
               : isBonus
                 ? 'var(--house-free)'
-                : 'var(--house-room)';
+                : isBack
+                  ? 'var(--house-back)'
+                  : 'var(--house-room)';
 
           return (
             <g key={`cell-${sq}`}>
@@ -633,7 +637,12 @@ export const HouseBoard: React.FC<HouseBoardProps> = ({
               />
 
               {/* Subtle cozy furniture props in non-question transition rooms */}
-              {!wordId && !isStart && !isGoal && !isBonus && renderRoomProp(sq, x, y)}
+              {!wordId &&
+                !isStart &&
+                !isGoal &&
+                !isBonus &&
+                !isBack &&
+                renderRoomProp(sq, x, y)}
 
               {/* Room Number */}
               <text
@@ -744,6 +753,29 @@ export const HouseBoard: React.FC<HouseBoardProps> = ({
                     style={{ fontSize: '18px', fill: 'var(--ink)' }}
                   >
                     +2
+                  </text>
+                </g>
+              )}
+
+              {/* Back -1 (Retrocede 1) Tiles */}
+              {isBack && (
+                <g>
+                  <path
+                    d={`M${x + 33} ${y + 23} L${x + 27} ${y + 28} L${x + 33} ${y + 33} M${x + 42} ${y + 23} L${x + 36} ${y + 28} L${x + 42} ${y + 33}`}
+                    fill="none"
+                    stroke="var(--house-outline)"
+                    strokeWidth={2.4}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <text
+                    className="font-hand font-bold"
+                    x={x + CELL_SIZE / 2}
+                    y={y + 52}
+                    textAnchor="middle"
+                    style={{ fontSize: '18px', fill: 'var(--ink)' }}
+                  >
+                    -1
                   </text>
                 </g>
               )}

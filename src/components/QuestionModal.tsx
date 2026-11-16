@@ -10,7 +10,6 @@ interface QuestionModalProps {
   gameState: GameState;
   videos: Record<string, string>;
   onAnswer: (selectedId: string) => void;
-  onValidateSign: () => void;
   onClose: () => void;
 }
 
@@ -21,11 +20,9 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
   gameState,
   videos,
   onAnswer,
-  onValidateSign,
   onClose,
 }) => {
   const [selected, setSelected] = useState<string | null>(null);
-  const [validated, setValidated] = useState(false);
 
   const question = QUESTIONS[wordId];
   const targetWord = WORD_MAP[wordId];
@@ -60,7 +57,7 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
             />
           </div>
           <p className="text-xs text-[var(--muted)] text-center font-hand">
-            Observa atentamente la flecha roja en el árbol para responder
+            Observa atentamente el árbol familiar para responder
           </p>
         </div>
 
@@ -187,25 +184,6 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
               )}
 
               <div className="flex flex-wrap gap-2.5 mt-1">
-                {isCorrect && (
-                  <button
-                    type="button"
-                    disabled={validated}
-                    onClick={() => {
-                      if (!validated && isCorrect) {
-                        setValidated(true);
-                        onValidateSign();
-                      }
-                    }}
-                    className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all ${
-                      validated
-                        ? 'bg-[var(--good)] text-white border-[var(--good)] cursor-default'
-                        : 'bg-transparent text-[var(--good)] border-[var(--good)] hover:bg-[var(--good-soft)] cursor-pointer'
-                    }`}
-                  >
-                    {validated ? '✓ Seña validada (+1)' : '✓ Seña bien hecha (+1)'}
-                  </button>
-                )}
                 <button
                   type="button"
                   onClick={onClose}

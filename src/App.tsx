@@ -5,6 +5,7 @@ import { QuestionModal } from './components/QuestionModal';
 import { VictoryModal } from './components/VictoryModal';
 import { VocabularyView } from './components/VocabularyView';
 import {
+  BACK_ONE_SQUARES,
   BONUS_TWO_SQUARES,
   DEFAULT_POOL,
   DEFAULT_SIGN_VIDEOS,
@@ -252,6 +253,20 @@ export default function App() {
       setBouncingPawn(true);
       setTimeout(() => setBouncingPawn(false), 600);
       await delay(400);
+    } else if (BACK_ONE_SQUARES.includes(landedSquare) && landedSquare > 1) {
+      showToast('¡Retrocede 1! Vuelves 1 casilla');
+      soundEffects.playSnake(audioEnabled);
+      await delay(550);
+      landedSquare = Math.max(1, landedSquare - 1);
+      setGameState((prev) => {
+        const nextPos = [...prev.pos];
+        nextPos[activeTurn] = landedSquare;
+        return { ...prev, pos: nextPos, last: landedSquare };
+      });
+      soundEffects.playStep(audioEnabled);
+      setBouncingPawn(true);
+      setTimeout(() => setBouncingPawn(false), 600);
+      await delay(400);
     }
 
     if (landedSquare >= 36) {
@@ -309,17 +324,6 @@ export default function App() {
     }
   };
 
-  const handleValidateSign = () => {
-    const activeTurn = gameState.turn;
-    soundEffects.playSuccess(audioEnabled);
-    setGameState((prev) => {
-      const nextPts = [...prev.pts];
-      nextPts[activeTurn] += 1;
-      return { ...prev, pts: nextPts };
-    });
-    showToast('+1 punto por la seña bien ejecutada');
-  };
-
   const handleCloseQuestion = () => {
     setQuestionWordId(null);
     advanceTurn();
@@ -365,19 +369,31 @@ export default function App() {
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] py-5 px-3 sm:px-6 transition-colors">
       <div className="max-w-6xl mx-auto flex flex-col gap-5 sm:gap-6">
         <header className="flex flex-wrap gap-4 items-end justify-between border-b-2 border-[var(--line)]/20 pb-4">
-          <div>
+          <div className="max-w-2xl">
             <div className="text-xs uppercase tracking-widest font-extrabold text-[var(--muted)]">
-              Lengua de señas · Vocabulario de la familia
+              Lengua de señas · Juego didáctico de la familia
             </div>
             <h1 className="font-hand text-4xl sm:text-6xl text-[var(--ink)] leading-none mt-1">
-              La Casa de la Familia
+              Entre{' '}
+              <span className="text-[var(--accent)]">Señas y Escaleras</span>
+              : La Casa Familiar
             </h1>
-            <p className="max-w-2xl text-[var(--muted)] text-sm sm:text-base mt-1.5 leading-relaxed">
+            <div className="mt-2.5 text-xs sm:text-sm text-[var(--ink)]/85 leading-snug">
+              <span className="font-extrabold uppercase tracking-wider text-[11px] text-[var(--accent)] block mb-0.5">
+                Integrantes
+              </span>
+              <p className="m-0 font-semibold text-[var(--ink)]">
+                Angie Michelle Amézquita Luna · Nivaldo de Jesús Castilla Davila
+                · Diego Andrés Barrios · Felipe Jaramillo Tatis · Josué Daniel
+                Olivares Mora
+              </p>
+            </div>
+            <p className="text-[var(--muted)] text-sm sm:text-base mt-2.5 leading-relaxed">
               Serpientes y escaleras dentro de la casa. Lanza el dado, sube por
-              las escaleras, cuidado con las serpientes y, cuando caigas en un{' '}
-              <b className="text-[var(--ink)]">retrato</b>, mira la{' '}
-              <b className="text-[var(--accent)]">flecha roja del árbol</b> y
-              elige la seña correcta.
+              las escaleras, evita las serpientes y, cuando caigas en un{' '}
+              <b className="text-[var(--ink)]">retrato</b>, observa el{' '}
+              <b className="text-[var(--accent)]">árbol familiar y la pista</b>{' '}
+              para elegir la seña correcta.
             </p>
           </div>
 
@@ -482,16 +498,27 @@ export default function App() {
               <p>
                 Recorrer la casa desde la <b>SALIDA</b> (casilla 1) hasta la{' '}
                 <b>META</b> (casilla 36) y completar los{' '}
-                <b>retratos familiares</b> respondiendo preguntas de señas. Gana
-                el equipo con más puntos cuando alguien llega a la meta.
+                <b>22 retratos familiares</b> respondiendo las preguntas. Si
+                juegan varios equipos, gana quien sume más puntos al llegar a la
+                meta.
               </p>
               <h3 className="font-hand text-xl text-[var(--accent)] font-normal mt-2 m-0">
                 Preparación
               </h3>
               <ul className="list-disc pl-4 space-y-1">
-                <li>De 1 a 4 equipos. Todos empiezan en la casilla 1.</li>
-                <li>Cada turno, un integrante distinto es el señante.</li>
-                <li>El docente valida las señas hechas físicamente.</li>
+                <li>
+                  Pueden jugar de <b>1 jugador</b> hasta <b>4 equipos</b>. Todos
+                  empiezan en la casilla 1.
+                </li>
+                <li>
+                  Todo el juego se desarrolla de forma <b>100 % virtual</b>: en
+                  cada turno el participante lanza el dado y responde
+                  directamente en pantalla.
+                </li>
+                <li>
+                  Antes de empezar, pueden repasar las 22 señas en{' '}
+                  <b>«Estudiar señas»</b>.
+                </li>
               </ul>
             </section>
 
@@ -500,24 +527,29 @@ export default function App() {
                 Cómo se juega
               </h3>
               <ol className="list-decimal pl-4 space-y-1">
-                <li>El equipo en turno lanza el dado y avanza esas casillas.</li>
+                <li>El jugador o equipo en turno lanza el dado y avanza.</li>
                 <li>
-                  <b>Escalera:</b> si cae al pie, sube. <b>Serpiente:</b> si
-                  cae en la cabeza, baja a la cola.
+                  <b>3 escaleras y 4 serpientes:</b> si cae al pie de una
+                  escalera, sube; si cae en la cabeza de una serpiente, baja a
+                  la cola.
                 </li>
                 <li>
-                  <b>Retrato:</b> en el árbol aparece una <b>flecha roja</b> que
-                  marca a un familiar. Se elige entre 4 opciones la seña
-                  correcta.
+                  <b>Casilla +2 y Retrocede -1:</b> en <b>+2</b> avanzas 2
+                  casillas extra; en <b>-1</b> retrocedes 1 casilla.
                 </li>
                 <li>
-                  Si acierta, el cuadro se completa y el señante hace la seña
-                  frente al grupo.
+                  <b>Retrato:</b> lee la descripción y observa en el árbol (a
+                  partir de <b>«Soy yo»</b>) la <b>flecha roja</b> o el{' '}
+                  <b>marco rojo de familia</b>. Luego elige entre 4 opciones (en
+                  video o imagen).
                 </li>
-                <li>Si falla, el cuadro queda vacío para otro turno.</li>
                 <li>
-                  <b>Casilla +2:</b> si caes aquí, avanzas automáticamente 2
-                  casillas extra.
+                  Si acierta, suma <b>+2 puntos</b>, completa el retrato y ve un
+                  ejemplo en frase.
+                </li>
+                <li>
+                  Si falla o si ese retrato ya fue completado antes, pasa el
+                  turno al siguiente equipo.
                 </li>
               </ol>
             </section>
@@ -532,12 +564,6 @@ export default function App() {
                     <td className="py-1">Elegir la seña correcta</td>
                     <td className="py-1 text-right font-hand text-xl font-bold text-[var(--good)] tabular-nums">
                       +2
-                    </td>
-                  </tr>
-                  <tr className="border-b border-dashed border-[var(--line)]/25">
-                    <td className="py-1">Hacer la seña bien (validada)</td>
-                    <td className="py-1 text-right font-hand text-xl font-bold text-[var(--good)] tabular-nums">
-                      +1
                     </td>
                   </tr>
                   <tr className="border-b border-dashed border-[var(--line)]/25">
@@ -562,6 +588,10 @@ export default function App() {
                 <span className="flex items-center gap-1.5">
                   <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-free)] border border-[var(--house-outline)]" />
                   Casilla +2
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-back)] border border-[var(--house-outline)]" />
+                  Retrocede -1
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-wood)] border border-[var(--house-outline)]" />
@@ -697,7 +727,6 @@ export default function App() {
           gameState={gameState}
           videos={videos}
           onAnswer={handleAnswer}
-          onValidateSign={handleValidateSign}
           onClose={handleCloseQuestion}
         />
       )}

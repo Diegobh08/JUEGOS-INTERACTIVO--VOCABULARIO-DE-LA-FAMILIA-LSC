@@ -80,7 +80,7 @@ export const WORDS: WordItem[] = [
     w: 'Primo',
     img: ['primo'],
     d: 'Los índices en gancho se tocan y una mano baja.',
-    sentence: 'Mi primo es el hijo de mi tío y mi tía.',
+    sentence: 'Mi primo es el hijo de mi tío o mi tía.',
   },
   {
     id: 'hermano',
@@ -226,12 +226,12 @@ export const QUESTIONS: Record<string, QuestionConfig> = {
   papa: {
     sq: 12,
     t: 'papa',
-    clue: 'Es el hijo de mi abuelo y esposo de quien está a su lado en el árbol. ¿Qué es para mí?',
+    clue: 'Es el hijo de mi abuelo y esposo de mi madre. ¿Qué es para mí?',
   },
   mama: {
     sq: 13,
     t: 'mama',
-    clue: 'Es la mujer que me dio la vida y esposa de quien está a su lado en el árbol. ¿Qué es para mí?',
+    clue: 'Es la esposa de mi padre. ¿Qué es para mí?',
   },
   abuelo: {
     sq: 15,
@@ -251,7 +251,7 @@ export const QUESTIONS: Record<string, QuestionConfig> = {
   primo: {
     sq: 18,
     t: 'primo',
-    clue: 'Es el hijo de mi tío y mi tía. ¿Qué es para mí?',
+    clue: 'Es el hijo de mi tío o mi tía. ¿Qué es para mí?',
   },
   novio: {
     sq: 21,
@@ -316,7 +316,9 @@ for (const wordId in QUESTIONS) {
   SQUARE_TO_WORD[QUESTIONS[wordId].sq] = wordId;
 }
 
-export const BONUS_TWO_SQUARES = [6, 11, 20, 27, 32];
+export const BONUS_TWO_SQUARES = [6, 20, 27];
+
+export const BACK_ONE_SQUARES = [11, 32];
 
 export const LADDERS: Record<number, number> = {
   3: 15,
@@ -327,6 +329,7 @@ export const LADDERS: Record<number, number> = {
 export const SNAKES: Record<number, number> = {
   14: 2,
   26: 22,
+  29: 18,
   34: 23,
 };
 

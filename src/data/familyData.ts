@@ -394,6 +394,12 @@ export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
   tio: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.57_PM_b4baa531.mp4`,
 };
 
+export const GHOST_NODE_IMAGES: Record<string, string> = {
+  abuela: `${import.meta.env.BASE_URL}assets/aistudio/image_8afad188.png`,
+  suegra: `${import.meta.env.BASE_URL}assets/aistudio/image_ce795574.png`,
+  tia: `${import.meta.env.BASE_URL}assets/aistudio/image_41df500d.png`,
+};
+
 export function getSignImageUrl(name: string): string {
   return `${import.meta.env.BASE_URL}senas/${name}.jpg`;
 }

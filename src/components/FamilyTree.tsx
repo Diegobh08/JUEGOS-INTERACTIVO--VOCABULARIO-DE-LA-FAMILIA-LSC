@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  GHOST_NODE_IMAGES,
   TREE_DASHED_PATH,
   TREE_NODES,
   TREE_NODE_MAP,
@@ -123,11 +124,39 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
           <g key={`tree-node-${id}`} className={cls}>
             <rect className="nb" x={x} y={y} width={96} height={112} rx={8} />
 
-            {type === 'ghost' && (
-              <text className="nl font-hand" x={x + 48} y={y + 56 + 6}>
-                {label}
-              </text>
-            )}
+            {type === 'ghost' &&
+              (GHOST_NODE_IMAGES[id] ? (
+                <>
+                  <rect
+                    className="nimg"
+                    x={x + 6}
+                    y={y + 6}
+                    width={84}
+                    height={76}
+                    rx={4}
+                  />
+                  <image
+                    href={GHOST_NODE_IMAGES[id]}
+                    x={x + 6}
+                    y={y + 6}
+                    width={84}
+                    height={76}
+                    preserveAspectRatio="xMidYMid meet"
+                    clipPath={`url(#${idPrefix}clip-${id})`}
+                  />
+                  <text
+                    className="nl font-hand font-bold"
+                    x={x + 48}
+                    y={y + 112 - 9}
+                  >
+                    {label}
+                  </text>
+                </>
+              ) : (
+                <text className="nl font-hand" x={x + 48} y={y + 56 + 6}>
+                  {label}
+                </text>
+              ))}
 
             {type === 'me' && (
               <>

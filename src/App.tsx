@@ -193,35 +193,43 @@ export default function App() {
 
     let landedSquare = currentPos;
 
-    if (LADDERS[landedSquare]) {
-      const target = LADDERS[landedSquare];
-      showToast(`¡Escalera! Sube de ${landedSquare} a ${target}`);
-      soundEffects.playLadder(audioEnabled);
-      await delay(650);
-      landedSquare = target;
-      setGameState((prev) => {
-        const nextPos = [...prev.pos];
-        nextPos[activeTurn] = landedSquare;
-        return { ...prev, pos: nextPos, last: landedSquare };
-      });
-      setBouncingPawn(true);
-      setTimeout(() => setBouncingPawn(false), 600);
-      await delay(500);
-    } else if (SNAKES[landedSquare]) {
-      const target = SNAKES[landedSquare];
-      showToast(`¡Serpiente! Baja de ${landedSquare} a ${target}`);
-      soundEffects.playSnake(audioEnabled);
-      await delay(650);
-      landedSquare = target;
-      setGameState((prev) => {
-        const nextPos = [...prev.pos];
-        nextPos[activeTurn] = landedSquare;
-        return { ...prev, pos: nextPos, last: landedSquare };
-      });
-      setBouncingPawn(true);
-      setTimeout(() => setBouncingPawn(false), 600);
-      await delay(500);
-    }
+    const applySnakesAndLadders = async (square: number): Promise<number> => {
+      if (LADDERS[square]) {
+        const target = LADDERS[square];
+        showToast(`¡Escalera! Sube de ${square} a ${target}`);
+        soundEffects.playLadder(audioEnabled);
+        await delay(650);
+        setGameState((prev) => {
+          const nextPos = [...prev.pos];
+          nextPos[activeTurn] = target;
+          return { ...prev, pos: nextPos, last: target };
+        });
+        setBouncingPawn(true);
+        setTimeout(() => setBouncingPawn(false), 600);
+        await delay(500);
+        return target;
+      }
+
+      if (SNAKES[square]) {
+        const target = SNAKES[square];
+        showToast(`¡Serpiente! Baja de ${square} a ${target}`);
+        soundEffects.playSnake(audioEnabled);
+        await delay(650);
+        setGameState((prev) => {
+          const nextPos = [...prev.pos];
+          nextPos[activeTurn] = target;
+          return { ...prev, pos: nextPos, last: target };
+        });
+        setBouncingPawn(true);
+        setTimeout(() => setBouncingPawn(false), 600);
+        await delay(500);
+        return target;
+      }
+
+      return square;
+    };
+
+    landedSquare = await applySnakesAndLadders(landedSquare);
 
     if (BONUS_TWO_SQUARES.includes(landedSquare) && landedSquare < 36) {
       showToast('¡Casilla +2! Avanzas 2 casillas');
@@ -238,21 +246,10 @@ export default function App() {
         soundEffects.playStep(audioEnabled);
         await delay(220);
       }
-      if (LADDERS[landedSquare]) {
-        const target = LADDERS[landedSquare];
-        showToast(`¡Escalera! Sube de ${landedSquare} a ${target}`);
-        soundEffects.playLadder(audioEnabled);
-        await delay(550);
-        landedSquare = target;
-        setGameState((prev) => {
-          const nextPos = [...prev.pos];
-          nextPos[activeTurn] = landedSquare;
-          return { ...prev, pos: nextPos, last: landedSquare };
-        });
-      }
       setBouncingPawn(true);
       setTimeout(() => setBouncingPawn(false), 600);
       await delay(400);
+      landedSquare = await applySnakesAndLadders(landedSquare);
     } else if (BACK_ONE_SQUARES.includes(landedSquare) && landedSquare > 1) {
       showToast('¡Retrocede 1! Vuelves 1 casilla');
       soundEffects.playSnake(audioEnabled);
@@ -267,6 +264,7 @@ export default function App() {
       setBouncingPawn(true);
       setTimeout(() => setBouncingPawn(false), 600);
       await delay(400);
+      landedSquare = await applySnakesAndLadders(landedSquare);
     }
 
     if (landedSquare >= 36) {

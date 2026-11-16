@@ -6,19 +6,6 @@ export interface WordItem {
   sentence: string;
 }
 
-export interface SentenceToken {
-  text: string;
-  wordId?: string;
-}
-
-export interface SentenceExample {
-  id: string;
-  title: string;
-  tokens: SentenceToken[];
-  signIds: string[];
-  explanation: string;
-}
-
 export interface QuestionConfig {
   sq: number;
   t: string;
@@ -47,4 +34,4 @@ export interface GameState {
   ended: boolean;
 }
 
-export type ViewMode = 'JUEGO' | 'VOCABULARIO' | 'FRASES';
+export type ViewMode = 'JUEGO' | 'VOCABULARIO';

@@ -21,6 +21,17 @@
   --t2: #1f5fa8;
   --t3: #d08a12;
   --t4: #7b45a8;
+  --house-trim: #9a778a;
+  --house-outline: #43323b;
+  --house-gable: #f7e9d8;
+  --house-room: #fceedb;
+  --house-start: #dce9c8;
+  --house-goal: #fde39b;
+  --house-free: #cce0f4;
+  --house-glass: #c4dceb;
+  --house-wood: #c58f60;
+  --house-leaf: #7ea35a;
+  --house-snake: #b88dbb;
   --hand: "Patrick Hand", "Comic Sans MS", "Segoe Print", cursive;
   --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: light;
@@ -47,6 +58,17 @@
   --t2: #5e9be6;
   --t3: #e8a93a;
   --t4: #b98bdb;
+  --house-trim: #5c4553;
+  --house-outline: #b9aeb5;
+  --house-gable: #2d262c;
+  --house-room: #2a2730;
+  --house-start: #263829;
+  --house-goal: #473b1c;
+  --house-free: #233345;
+  --house-glass: #3c5970;
+  --house-wood: #9d6f49;
+  --house-leaf: #5e8244;
+  --house-snake: #9a709e;
   color-scheme: dark;
 }
 
@@ -230,11 +252,12 @@ svg text {
 
 .node.me .nb {
   fill: var(--accent-soft);
+  stroke: var(--accent);
 }
 
 .node.me .nl {
   fill: var(--accent);
-  font-size: 28px;
+  font-size: 19px;
 }
 
 .mering {

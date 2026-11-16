@@ -69,9 +69,11 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
             ¿Qué seña es?
           </h2>
           {question?.clue && (
-            <p className="text-xs sm:text-sm text-[var(--muted)] mb-3 leading-snug font-semibold">
-              {question.clue}
-            </p>
+            <div className="bg-[var(--accent-soft)]/55 border border-[var(--accent)]/30 rounded-xl px-3.5 py-2.5 mb-3">
+              <p className="text-base sm:text-xl text-[var(--ink)] leading-snug font-bold m-0">
+                {question.clue}
+              </p>
+            </div>
           )}
 
           <div className="grid grid-cols-2 gap-2.5 sm:gap-3">

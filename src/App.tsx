@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { FamilyTree } from './components/FamilyTree';
-import { FreeSignModal } from './components/FreeSignModal';
 import { HouseBoard } from './components/HouseBoard';
 import { QuestionModal } from './components/QuestionModal';
 import { VictoryModal } from './components/VictoryModal';
 import { VocabularyView } from './components/VocabularyView';
 import {
+  BONUS_TWO_SQUARES,
   DEFAULT_POOL,
   DEFAULT_SIGN_VIDEOS,
   DIE_PIPS,
-  FREE_SIGN_SQUARES,
   LADDERS,
   QUESTIONS,
   SNAKES,
@@ -65,7 +64,6 @@ export default function App() {
   const [questionWordId, setQuestionWordId] = useState<string | null>(null);
   const [modalSquare, setModalSquare] = useState(0);
   const [questionOptions, setQuestionOptions] = useState<string[]>([]);
-  const [showFreeModal, setShowFreeModal] = useState(false);
   const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
 
@@ -156,8 +154,7 @@ export default function App() {
       busy ||
       rolling ||
       gameState.ended ||
-      questionWordId ||
-      showFreeModal
+      questionWordId
     ) {
       return;
     }
@@ -225,6 +222,38 @@ export default function App() {
       await delay(500);
     }
 
+    if (BONUS_TWO_SQUARES.includes(landedSquare) && landedSquare < 36) {
+      showToast('¡Casilla +2! Avanzas 2 casillas');
+      soundEffects.playLadder(audioEnabled);
+      await delay(550);
+      for (let extra = 0; extra < 2 && landedSquare < 36; extra++) {
+        landedSquare++;
+        const nextBonusSquare = landedSquare;
+        setGameState((prev) => {
+          const nextPos = [...prev.pos];
+          nextPos[activeTurn] = nextBonusSquare;
+          return { ...prev, pos: nextPos, last: nextBonusSquare };
+        });
+        soundEffects.playStep(audioEnabled);
+        await delay(220);
+      }
+      if (LADDERS[landedSquare]) {
+        const target = LADDERS[landedSquare];
+        showToast(`¡Escalera! Sube de ${landedSquare} a ${target}`);
+        soundEffects.playLadder(audioEnabled);
+        await delay(550);
+        landedSquare = target;
+        setGameState((prev) => {
+          const nextPos = [...prev.pos];
+          nextPos[activeTurn] = landedSquare;
+          return { ...prev, pos: nextPos, last: landedSquare };
+        });
+      }
+      setBouncingPawn(true);
+      setTimeout(() => setBouncingPawn(false), 600);
+      await delay(400);
+    }
+
     if (landedSquare >= 36) {
       soundEffects.playVictory(audioEnabled);
       setGameState((prev) => {
@@ -244,10 +273,6 @@ export default function App() {
       setQuestionOptions(opts);
       setQuestionWordId(wordId);
       setGameState((prev) => ({ ...prev, mark: QUESTIONS[wordId].t }));
-      setBusy(false);
-    } else if (FREE_SIGN_SQUARES.includes(landedSquare)) {
-      setModalSquare(landedSquare);
-      setShowFreeModal(true);
       setBusy(false);
     } else {
       if (wordId) {
@@ -300,24 +325,6 @@ export default function App() {
     advanceTurn();
   };
 
-  const handleFreeSuccess = () => {
-    const activeTurn = gameState.turn;
-    soundEffects.playSuccess(audioEnabled);
-    setGameState((prev) => {
-      const nextPts = [...prev.pts];
-      nextPts[activeTurn] += 1;
-      return { ...prev, pts: nextPts };
-    });
-    setShowFreeModal(false);
-    showToast('+1 punto por la seña libre');
-    advanceTurn();
-  };
-
-  const handleFreeFail = () => {
-    setShowFreeModal(false);
-    advanceTurn();
-  };
-
   const handleTeamCountChange = (count: number) => {
     if (count === gameState.n || busy) return;
     if (
@@ -334,7 +341,6 @@ export default function App() {
     setGameState(createInitialState(gameState.n));
     setConfirmReset(false);
     setQuestionWordId(null);
-    setShowFreeModal(false);
     setShowVictoryModal(false);
     setBusy(false);
     showToast('Juego reiniciado');
@@ -343,11 +349,10 @@ export default function App() {
   const getTeamLabel = (idx: number) =>
     gameState.n === 1 ? 'Jugador' : `Equipo ${idx + 1}`;
 
-  if (view === 'VOCABULARIO' || view === 'FRASES') {
+  if (view === 'VOCABULARIO') {
     return (
       <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
         <VocabularyView
-          initialTab={view === 'FRASES' ? 'sentences' : 'words'}
           videos={videos}
           onStartPlaying={() => setView('JUEGO')}
           onBackToHome={() => setView('JUEGO')}
@@ -409,14 +414,6 @@ export default function App() {
               className="px-3 py-1.5 rounded-xl border-2 border-[var(--line)] bg-[var(--card)] text-xs sm:text-sm font-bold text-[var(--ink)] hover:bg-[var(--line)]/10 cursor-pointer transition-all shadow-xs"
             >
               Estudiar señas
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setView('FRASES')}
-              className="px-3 py-1.5 rounded-xl border-2 border-[var(--accent)] bg-[var(--accent-soft)] text-xs sm:text-sm font-bold text-[var(--accent)] hover:opacity-90 cursor-pointer transition-all shadow-xs"
-            >
-              Frases con señas
             </button>
 
             <button
@@ -519,8 +516,8 @@ export default function App() {
                 </li>
                 <li>Si falla, el cuadro queda vacío para otro turno.</li>
                 <li>
-                  <b>Seña libre ✋:</b> el equipo hace cualquier seña familiar
-                  sin mirar.
+                  <b>Casilla +2:</b> si caes aquí, avanzas automáticamente 2
+                  casillas extra.
                 </li>
               </ol>
             </section>
@@ -544,12 +541,6 @@ export default function App() {
                     </td>
                   </tr>
                   <tr className="border-b border-dashed border-[var(--line)]/25">
-                    <td className="py-1">Seña libre bien hecha</td>
-                    <td className="py-1 text-right font-hand text-xl font-bold text-[var(--good)] tabular-nums">
-                      +1
-                    </td>
-                  </tr>
-                  <tr className="border-b border-dashed border-[var(--line)]/25">
                     <td className="py-1">Llegar primero a la META</td>
                     <td className="py-1 text-right font-hand text-xl font-bold text-[var(--accent)] tabular-nums">
                       +3
@@ -565,19 +556,19 @@ export default function App() {
               </table>
               <div className="flex flex-wrap gap-3 text-xs text-[var(--muted)] mt-2">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--paper)] border border-[var(--line)]" />
+                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-room)] border border-[var(--house-outline)]" />
                   Retrato
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--free)] border border-[var(--line)]" />
-                  Seña libre
+                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-free)] border border-[var(--house-outline)]" />
+                  Casilla +2
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--ladder)]" />
+                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-wood)] border border-[var(--house-outline)]" />
                   Escalera
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--snake)]" />
+                  <span className="w-3.5 h-3.5 rounded-sm bg-[var(--house-snake)] border border-[var(--house-outline)]" />
                   Serpiente
                 </span>
               </div>
@@ -667,7 +658,7 @@ export default function App() {
           <div className="lg:col-span-6 flex flex-col gap-2.5">
             <div className="flex items-baseline justify-between gap-2 flex-wrap">
               <h2 className="font-hand text-2xl sm:text-3xl font-normal text-[var(--ink)] m-0">
-                Árbol genealógico de YO
+                Mi árbol genealógico
               </h2>
               <span className="text-xs sm:text-sm text-[var(--accent)] font-bold">
                 La flecha roja marca la pregunta
@@ -708,15 +699,6 @@ export default function App() {
           onAnswer={handleAnswer}
           onValidateSign={handleValidateSign}
           onClose={handleCloseQuestion}
-        />
-      )}
-
-      {showFreeModal && (
-        <FreeSignModal
-          squareNumber={modalSquare}
-          gameState={gameState}
-          onSuccess={handleFreeSuccess}
-          onFail={handleFreeFail}
         />
       )}
 

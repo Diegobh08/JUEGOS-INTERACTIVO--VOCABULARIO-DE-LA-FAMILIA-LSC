@@ -41,7 +41,7 @@ function delay(ms: number) {
 }
 
 export default function App() {
-  const [view, setView] = useState<ViewMode>('JUEGO');
+  const [view, setView] = useState<ViewMode>('VOCABULARIO');
   const [gameState, setGameState] = useState<GameState>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -354,6 +354,15 @@ export default function App() {
   if (view === 'VOCABULARIO') {
     return (
       <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 pt-4">
+          <div className="bg-[var(--accent-soft)]/55 border-2 border-[var(--accent)]/30 rounded-xl px-4 py-2.5 text-sm sm:text-base font-bold text-[var(--ink)]">
+            <span className="text-[var(--accent)] uppercase tracking-wider text-xs font-extrabold mr-2">
+              Paso 1 de 2
+            </span>
+            Estudia las 22 señas del vocabulario de la familia. Cuando termines,
+            pulsa «¡A jugar en la casa!» para empezar el juego.
+          </div>
+        </div>
         <VocabularyView
           videos={videos}
           onStartPlaying={() => setView('JUEGO')}
@@ -514,7 +523,8 @@ export default function App() {
                   directamente en pantalla.
                 </li>
                 <li>
-                  Antes de empezar, pueden repasar las 22 señas en{' '}
+                  El juego comienza con la <b>presentación del vocabulario</b>
+                  (22 señas). Durante la partida pueden volver a repasarlas en{' '}
                   <b>«Estudiar señas»</b>.
                 </li>
               </ul>

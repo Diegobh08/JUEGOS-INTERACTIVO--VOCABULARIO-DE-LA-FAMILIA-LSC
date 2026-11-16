@@ -382,6 +382,7 @@ export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
   esposa: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.45_PM_e3f6b9f8.mp4`,
   familia: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__3__084ce41c.mp4`,
   hermano: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__2__152f0a9a.mp4`,
+  hijo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_7.45.02_PM_4b91dd99.mp4`,
   hombre: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__1__6f422231.mp4`,
   mama: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM_1dc916e1.mp4`,
   mcatolico: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.23_PM_94827cad.mp4`,

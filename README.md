@@ -113,7 +113,7 @@ npm run dev
 npm run build
 ```
 
-## 🌐 Accede a La Casa de las Señas
+## 🌐 Accede a Entre Señas y Escaleras: La Casa Familiar
 
 ¡La plataforma está disponible en línea!
 
@@ -121,7 +121,7 @@ npm run build
 
 ## 💚 Nuestro propósito
 
-Creemos que la comunicación es un puente que nos conecta. Por eso, La Casa de las Señas busca acercar a las personas a la Lengua de Señas Colombiana mediante experiencias educativas que combinan tecnología, creatividad y aprendizaje.
+Creemos que la comunicación es un puente que nos conecta. Por eso, Entre Señas y Escaleras: La Casa Familiar busca acercar a las personas a la Lengua de Señas Colombiana mediante experiencias educativas que combinan tecnología, creatividad y aprendizaje.
 
 Más que aprender palabras, queremos fomentar el respeto, la empatía y la inclusión, reconociendo que existen diferentes maneras de comunicarnos y comprender el mundo.
 

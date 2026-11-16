@@ -390,6 +390,10 @@ export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
   nieto: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.34_PM_bc819944.mp4`,
   nino: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.40_PM_0aae969e.mp4`,
   novio: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.21.48_PM_ea17986d.mp4`,
+  padrino: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_4.08.26_PM__1__f80dbe0d.mp4`,
+  papa: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_4.08.26_PM_d5a5646f.mp4`,
+  primo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_4.08.26_PM__3__8be2b3ba.mp4`,
+  sobrino: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_4.08.26_PM__2__0a94c7f1.mp4`,
   suegro: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.39_PM_98bff232.mp4`,
   tio: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-16_at_2.43.57_PM_b4baa531.mp4`,
 };

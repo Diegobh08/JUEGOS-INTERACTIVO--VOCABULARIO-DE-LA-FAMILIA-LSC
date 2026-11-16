@@ -375,26 +375,25 @@ export const DIE_PIPS: Record<number, number[]> = {
 };
 
 export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
-  abuelo:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__2__ad282f6a.mp4',
-  amigo:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__1__3e42114f.mp4',
-  bebe:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM_b1b6b135.mp4',
-  cunado:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.46_PM_b8c78072.mp4',
-  esposa:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.45_PM_e3f6b9f8.mp4',
-  familia:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__3__084ce41c.mp4',
-  hermano:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__2__152f0a9a.mp4',
-  hombre:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__1__6f422231.mp4',
-  mama:
-    '/assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM_1dc916e1.mp4',
+ abuelo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__2__ad282f6a.mp4`,
+
+  amigo: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM__1__3e42114f.mp4`,
+
+  bebe: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.55_PM_b1b6b135.mp4`,
+
+  cunado: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.46_PM_b8c78072.mp4`,
+
+  esposa: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_8.47.45_PM_e3f6b9f8.mp4`,
+
+  familia: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__3__084ce41c.mp4`,
+
+  hermano: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__2__152f0a9a.mp4`,
+
+  hombre: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM__1__6f422231.mp4`,
+
+  mama: `${import.meta.env.BASE_URL}assets/aistudio/WhatsApp_Video_2026-11-14_at_10.24.22_PM_1dc916e1.mp4`,
 };
 
 export function getSignImageUrl(name: string): string {
-  return `/senas/${name}.jpg`;
+  return `${import.meta.env.BASE_URL}senas/${name}.jpg`;
 }

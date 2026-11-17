@@ -315,10 +315,15 @@ export default function App() {
       });
     } else {
       soundEffects.playWrong(audioEnabled);
-      setGameState((prev) => ({
-        ...prev,
-        tried: { ...prev.tried, [questionWordId]: true },
-      }));
+      setGameState((prev) => {
+        const nextPts = [...prev.pts];
+        nextPts[activeTurn] -= 1;
+        return {
+          ...prev,
+          pts: nextPts,
+          tried: { ...prev.tried, [questionWordId]: true },
+        };
+      });
     }
   };
 
@@ -556,8 +561,8 @@ export default function App() {
                   ejemplo en frase.
                 </li>
                 <li>
-                  Si falla o si ese retrato ya fue completado antes, pasa el
-                  turno al siguiente equipo.
+                  Si falla, resta <b>-1 punto</b> y pasa el turno al siguiente
+                  equipo (si ese retrato ya estaba completo, solo pasa el turno).
                 </li>
               </ol>
             </section>
@@ -582,8 +587,8 @@ export default function App() {
                   </tr>
                   <tr>
                     <td className="py-1">Respuesta equivocada</td>
-                    <td className="py-1 text-right font-hand text-xl font-bold text-[var(--muted)] tabular-nums">
-                      0
+                    <td className="py-1 text-right font-hand text-xl font-bold text-[var(--accent)] tabular-nums">
+                      -1
                     </td>
                   </tr>
                 </tbody>

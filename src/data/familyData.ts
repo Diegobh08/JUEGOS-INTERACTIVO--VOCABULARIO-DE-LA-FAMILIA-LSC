@@ -400,9 +400,34 @@ export const DEFAULT_SIGN_VIDEOS: Record<string, string> = {
 };
 
 export const GHOST_NODE_IMAGES: Record<string, string> = {
-  abuela: `${import.meta.env.BASE_URL}assets/aistudio/image_8afad188.png`,
-  suegra: `${import.meta.env.BASE_URL}assets/aistudio/image_ce795574.png`,
-  tia: `${import.meta.env.BASE_URL}assets/aistudio/image_41df500d.png`,
+  abuela: `${import.meta.env.BASE_URL}assets/aistudio/Abuela_cb357fd6.png`,
+  suegra: `${import.meta.env.BASE_URL}assets/aistudio/Suegra_40acd3bf.png`,
+  tia: `${import.meta.env.BASE_URL}assets/aistudio/Tia_eca23ea5.png`,
+};
+
+export const CONCEPT_IMAGES: Record<string, string> = {
+  abuelo: `${import.meta.env.BASE_URL}assets/aistudio/abuelo_a3925a9e.png`,
+  amigo: `${import.meta.env.BASE_URL}assets/aistudio/Amigo_f5543af4.jpg`,
+  bebe: `${import.meta.env.BASE_URL}assets/aistudio/bebe_556d70b9.jpg`,
+  cunado: `${import.meta.env.BASE_URL}assets/aistudio/Cu_ado_807140b9.png`,
+  esposa: `${import.meta.env.BASE_URL}assets/aistudio/Esposa_c8aef869.png`,
+  familia: `${import.meta.env.BASE_URL}assets/aistudio/familia_bbe56e46.png`,
+  hermano: `${import.meta.env.BASE_URL}assets/aistudio/Hermano_a343cd55.png`,
+  hijo: `${import.meta.env.BASE_URL}assets/aistudio/Hijo_bd013fe8.png`,
+  hombre: `${import.meta.env.BASE_URL}assets/aistudio/Hombre_6583e115.png`,
+  mama: `${import.meta.env.BASE_URL}assets/aistudio/Mama_142d3d02.png`,
+  mcatolico: `${import.meta.env.BASE_URL}assets/aistudio/Matrimonio_catolico_b166cd81.png`,
+  mcivil: `${import.meta.env.BASE_URL}assets/aistudio/Matrimonio_civil_575372f3.png`,
+  mujer: `${import.meta.env.BASE_URL}assets/aistudio/Mujer_fe252f59.png`,
+  nieto: `${import.meta.env.BASE_URL}assets/aistudio/Nieto_8cf42e72.png`,
+  nino: `${import.meta.env.BASE_URL}assets/aistudio/Ni_o_a665984f.png`,
+  novio: `${import.meta.env.BASE_URL}assets/aistudio/Novio_8e1d1615.png`,
+  padrino: `${import.meta.env.BASE_URL}assets/aistudio/Padrino_a1ce2f0d.png`,
+  papa: `${import.meta.env.BASE_URL}assets/aistudio/Pap__5c1049a0.png`,
+  primo: `${import.meta.env.BASE_URL}assets/aistudio/Primo_bc8c6f3c.jpg`,
+  sobrino: `${import.meta.env.BASE_URL}assets/aistudio/Sobrino_6b60d28a.png`,
+  suegro: `${import.meta.env.BASE_URL}assets/aistudio/Suegro_560747f4.png`,
+  tio: `${import.meta.env.BASE_URL}assets/aistudio/Tio_da5fd8f3.png`,
 };
 
 export function getSignImageUrl(name: string): string {

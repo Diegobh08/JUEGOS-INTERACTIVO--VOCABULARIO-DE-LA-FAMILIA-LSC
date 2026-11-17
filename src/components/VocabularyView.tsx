@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { WORDS, getSignImageUrl } from '../data/familyData';
+import { CONCEPT_IMAGES, WORDS, getSignImageUrl } from '../data/familyData';
 
 interface VocabularyViewProps {
   videos: Record<string, string>;
@@ -61,8 +61,8 @@ export const VocabularyView: React.FC<VocabularyViewProps> = ({
             Vocabulario de la Familia
           </h1>
           <p className="text-xs sm:text-sm text-[var(--muted)] mt-1">
-            Toca cada tarjeta para revelar la palabra, su frase de ejemplo y
-            cómo realizar la seña (en video o ilustración).
+            Toca cada tarjeta para revelar la palabra, su frase de ejemplo, el
+            video de la seña o la imagen de lo que representa.
           </p>
         </div>
 
@@ -151,7 +151,8 @@ export const VocabularyView: React.FC<VocabularyViewProps> = ({
           const isRevealed = revealedIds.includes(word.id);
           const isDouble = word.img.length > 1;
           const hasVideo = Boolean(videos[word.id]);
-          const showDrawing = Boolean(showDrawingIds[word.id]);
+          const conceptImage = CONCEPT_IMAGES[word.id];
+          const showConcept = Boolean(conceptImage && showDrawingIds[word.id]);
 
           return (
             <div
@@ -173,20 +174,22 @@ export const VocabularyView: React.FC<VocabularyViewProps> = ({
             >
               <div className="px-3 pt-2.5 pb-1 flex items-center justify-between text-xs w-full gap-1">
                 <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider font-hand">
-                  {hasVideo && !showDrawing
+                  {hasVideo && !showConcept
                     ? 'Video'
-                    : isDouble
-                      ? 'Seña Compuesta'
-                      : 'Seña'}
+                    : conceptImage
+                      ? 'Imagen'
+                      : isDouble
+                        ? 'Seña Compuesta'
+                        : 'Seña'}
                 </span>
                 <div className="flex items-center gap-1.5">
-                  {hasVideo && (
+                  {hasVideo && conceptImage && (
                     <button
                       type="button"
                       onClick={(e) => toggleDrawing(e, word.id)}
                       className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)]/25 text-[var(--ink)] hover:border-[var(--line)] cursor-pointer"
                     >
-                      {showDrawing ? 'Ver video' : 'Ver dibujo'}
+                      {showConcept ? 'Ver video' : 'Ver imagen'}
                     </button>
                   )}
                   <span
@@ -202,7 +205,7 @@ export const VocabularyView: React.FC<VocabularyViewProps> = ({
               </div>
 
               <div className="p-2 flex-1 flex flex-col items-center justify-center bg-[var(--imgbg)] mx-2 my-1 rounded-xl border border-[var(--line)]/15 w-[calc(100%-1rem)]">
-                {hasVideo && !showDrawing ? (
+                {hasVideo && !showConcept ? (
                   <div className="w-full aspect-square max-w-[140px] flex items-center justify-center overflow-hidden rounded-lg bg-[#F4F5F7] dark:bg-[#1D2025]">
                     <video
                       src={videos[word.id]}
@@ -210,6 +213,15 @@ export const VocabularyView: React.FC<VocabularyViewProps> = ({
                       loop
                       autoPlay
                       playsInline
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                ) : conceptImage ? (
+                  <div className="w-full aspect-square max-w-[140px] flex items-center justify-center overflow-hidden rounded-lg bg-white">
+                    <img
+                      src={conceptImage}
+                      alt={isRevealed ? word.w : 'Imagen de la seña'}
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-contain"
                     />
                   </div>

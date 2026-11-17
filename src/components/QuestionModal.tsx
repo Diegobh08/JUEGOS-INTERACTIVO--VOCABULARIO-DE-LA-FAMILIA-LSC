@@ -23,9 +23,11 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
   onClose,
 }) => {
   const [selected, setSelected] = useState<string | null>(null);
+  const [optionMode, setOptionMode] = useState<'video' | 'image'>('video');
 
   const question = QUESTIONS[wordId];
   const targetWord = WORD_MAP[wordId];
+  const anyHasVideo = options.some((id) => Boolean(videos[id]));
   const answered = selected !== null;
   const isCorrect = selected === wordId;
   const teamLabel =
@@ -62,9 +64,41 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
         </div>
 
         <div className="flex flex-col">
-          <h2 className="font-hand text-3xl sm:text-4xl text-[var(--ink)] font-normal m-0 mb-2 pb-2 border-b-2 border-[var(--accent)]">
-            ¿Qué seña es?
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b-2 border-[var(--accent)]">
+            <h2 className="font-hand text-3xl sm:text-4xl text-[var(--ink)] font-normal m-0">
+              ¿Qué seña es?
+            </h2>
+            {anyHasVideo && (
+              <div
+                className="inline-flex rounded-xl border-2 border-[var(--line)]/25 bg-[var(--paper)] p-0.5 text-xs font-bold"
+                role="group"
+                aria-label="Formato de las señas"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOptionMode('video')}
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                    optionMode === 'video'
+                      ? 'bg-[var(--line)] text-[var(--paper)]'
+                      : 'text-[var(--ink)] hover:bg-[var(--card)]'
+                  }`}
+                >
+                  Videos
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOptionMode('image')}
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                    optionMode === 'image'
+                      ? 'bg-[var(--line)] text-[var(--paper)]'
+                      : 'text-[var(--ink)] hover:bg-[var(--card)]'
+                  }`}
+                >
+                  Señas en imagen
+                </button>
+              </div>
+            )}
+          </div>
           {question?.clue && (
             <div className="bg-[var(--accent-soft)]/55 border border-[var(--accent)]/30 rounded-xl px-3.5 py-2.5 mb-3">
               <p className="text-base sm:text-xl text-[var(--ink)] leading-snug font-bold m-0">
@@ -95,6 +129,7 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
               }
 
               const hasVideo = Boolean(videos[optId]);
+              const showVideo = hasVideo && optionMode === 'video';
 
               return (
                 <button
@@ -109,7 +144,7 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
                     {letter}
                   </span>
 
-                  {hasVideo ? (
+                  {showVideo ? (
                     <div className="relative w-full h-full bg-[#F4F5F7] dark:bg-[#1D2025] rounded-lg overflow-hidden flex items-center justify-center">
                       <video
                         src={videos[optId]}
@@ -169,7 +204,7 @@ export const QuestionModal: React.FC<QuestionModalProps> = ({
               >
                 {isCorrect
                   ? `¡Correcto! Es «${targetWord?.w}». +2 puntos y el retrato se completa.`
-                  : `Esa no es la seña. La respuesta correcta era «${targetWord?.w}».`}
+                  : `Esa no es la seña. -1 punto. La respuesta correcta era «${targetWord?.w}».`}
               </div>
 
               {targetWord?.sentence && (

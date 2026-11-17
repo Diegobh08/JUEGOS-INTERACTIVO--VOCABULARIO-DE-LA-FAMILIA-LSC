@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CONCEPT_IMAGES,
   GHOST_NODE_IMAGES,
   TREE_DASHED_PATH,
   TREE_NODES,
@@ -141,7 +142,7 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
                     y={y + 6}
                     width={84}
                     height={76}
-                    preserveAspectRatio="xMidYMid meet"
+                    preserveAspectRatio="xMidYMin slice"
                     clipPath={`url(#${idPrefix}clip-${id})`}
                   />
                   <text
@@ -237,38 +238,60 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
             )}
 
             {type === 'slot' &&
-              (isDone && wordItem ? (
-                <>
-                  <rect
-                    className="nimg"
-                    x={x + 6}
-                    y={y + 6}
-                    width={84}
-                    height={76}
-                    rx={4}
-                  />
-                  <image
-                    href={getSignImageUrl(wordItem.img[0])}
-                    x={x + 6}
-                    y={y + 6}
-                    width={84}
-                    height={76}
-                    preserveAspectRatio="xMidYMin slice"
-                    clipPath={`url(#${idPrefix}clip-${id})`}
-                  />
-                  <text
-                    className="nl font-hand font-bold"
-                    x={x + 48}
-                    y={y + 112 - 9}
-                  >
-                    {wordItem.w}
-                  </text>
-                </>
-              ) : (
-                <text className="nq font-hand" x={x + 48} y={y + 56 + 12}>
-                  ?
-                </text>
-              ))}
+              wordItem &&
+              (() => {
+                const slotImg =
+                  CONCEPT_IMAGES[id] || getSignImageUrl(wordItem.img[0]);
+                return (
+                  <>
+                    <rect
+                      className="nimg"
+                      x={x + 6}
+                      y={y + 6}
+                      width={84}
+                      height={76}
+                      rx={4}
+                    />
+                    <image
+                      href={slotImg}
+                      x={x + 6}
+                      y={y + 6}
+                      width={84}
+                      height={76}
+                      preserveAspectRatio="xMidYMin slice"
+                      clipPath={`url(#${idPrefix}clip-${id})`}
+                    />
+                    <text
+                      className="nl font-hand font-bold"
+                      x={x + 48}
+                      y={y + 112 - 9}
+                      style={isDone ? undefined : { fill: 'var(--muted)' }}
+                    >
+                      {isDone ? wordItem.w : '?'}
+                    </text>
+                    {isDone && (
+                      <g>
+                        <circle
+                          cx={x + 86}
+                          cy={y + 10}
+                          r={9}
+                          fill="var(--good)"
+                          stroke="var(--imgbg)"
+                          strokeWidth={1.8}
+                        />
+                        <path
+                          d={`M${x + 82} ${y + 10} L${x + 85} ${y + 13} L${x + 90.5} ${y + 7.5}`}
+                          fill="none"
+                          stroke="#FFFFFF"
+                          strokeWidth={2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </g>
+                    )}
+                  </>
+                );
+              })()}
           </g>
         );
       })}

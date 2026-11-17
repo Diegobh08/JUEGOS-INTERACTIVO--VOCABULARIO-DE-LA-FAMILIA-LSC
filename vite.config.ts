@@ -3,9 +3,14 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({command}) => {
   return {
-    base: '/JUEGOS-INTERACTIVO--VOCABULARIO-DE-LA-FAMILIA-LSC/',
+    base:
+      command === 'build'
+        ? process.env.GITHUB_ACTIONS
+          ? '/JUEGOS-INTERACTIVO--VOCABULARIO-DE-LA-FAMILIA-LSC/'
+          : './'
+        : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

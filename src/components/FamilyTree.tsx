@@ -1,4 +1,5 @@
 import React from 'react';
+import soyYoImg from '../assets/images/soy_yo_portrait_1795023870040.jpg';
 import {
   CONCEPT_IMAGES,
   GHOST_NODE_IMAGES,
@@ -162,70 +163,22 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
             {type === 'me' && (
               <>
                 <rect
+                  className="nimg"
                   x={x + 6}
                   y={y + 6}
                   width={84}
                   height={76}
                   rx={4}
-                  fill="var(--paper)"
-                  stroke="var(--accent)"
-                  strokeOpacity={0.35}
-                  strokeWidth={1.5}
                 />
-                <g clipPath={`url(#${idPrefix}clip-${id})`}>
-                  {/* Warm portrait backdrop glow */}
-                  <circle
-                    cx={x + 48}
-                    cy={y + 42}
-                    r={28}
-                    fill="var(--accent-soft)"
-                    opacity={0.75}
-                  />
-                  {/* Shoulders / Shirt */}
-                  <path
-                    d={`M${x + 22} ${y + 84} Q${x + 26} ${y + 61} ${x + 48} ${y + 61} Q${x + 70} ${y + 61} ${x + 74} ${y + 84} Z`}
-                    fill="var(--accent)"
-                    fillOpacity={0.22}
-                    stroke="var(--ink)"
-                    strokeWidth={2.2}
-                    strokeLinejoin="round"
-                  />
-                  {/* Neck */}
-                  <rect
-                    x={x + 43}
-                    y={y + 52}
-                    width={10}
-                    height={11}
-                    rx={3}
-                    fill="var(--house-room)"
-                    stroke="var(--ink)"
-                    strokeWidth={1.8}
-                  />
-                  {/* Head */}
-                  <circle
-                    cx={x + 48}
-                    cy={y + 39}
-                    r={16}
-                    fill="var(--house-room)"
-                    stroke="var(--ink)"
-                    strokeWidth={2.2}
-                  />
-                  {/* Hair */}
-                  <path
-                    d={`M${x + 32} ${y + 37} Q${x + 33} ${y + 20} ${x + 48} ${y + 20} Q${x + 64} ${y + 20} ${x + 64} ${y + 37} Q${x + 58} ${y + 28} ${x + 48} ${y + 30} Q${x + 38} ${y + 28} ${x + 32} ${y + 37} Z`}
-                    fill="var(--ink)"
-                  />
-                  {/* Friendly Eyes & Smile */}
-                  <circle cx={x + 42.5} cy={y + 39} r={1.6} fill="var(--ink)" />
-                  <circle cx={x + 53.5} cy={y + 39} r={1.6} fill="var(--ink)" />
-                  <path
-                    d={`M${x + 43.5} ${y + 46} Q${x + 48} ${y + 50} ${x + 52.5} ${y + 46}`}
-                    fill="none"
-                    stroke="var(--ink)"
-                    strokeWidth={1.8}
-                    strokeLinecap="round"
-                  />
-                </g>
+                <image
+                  href={soyYoImg}
+                  x={x + 6}
+                  y={y + 6}
+                  width={84}
+                  height={76}
+                  preserveAspectRatio="xMidYMin slice"
+                  clipPath={`url(#${idPrefix}clip-${id})`}
+                />
                 <text
                   className="nl font-hand font-bold"
                   x={x + 48}
